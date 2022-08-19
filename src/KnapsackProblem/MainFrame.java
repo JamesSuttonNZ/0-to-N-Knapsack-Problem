@@ -1,6 +1,8 @@
 package KnapsackProblem;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -8,7 +10,8 @@ public class MainFrame extends JFrame {
 	
 	private JTextArea textArea;
 	private JButton btn;
-	
+	private OptionsPanel optPanel;
+	private Knapsack knapsack;
 	
 	public MainFrame() {
 		super("Knapsack Problem");
@@ -16,9 +19,19 @@ public class MainFrame extends JFrame {
 		setLayout(new BorderLayout());
 		
 		textArea = new JTextArea();
-		btn = new JButton("Click Me!");
+		btn = new JButton("Calculate");
+		optPanel = new OptionsPanel();
 		
-		add(new OptionsPanel(), BorderLayout.NORTH);
+		btn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//knapsack.calculate(textArea);
+			}
+			
+		});
+		
+		add(optPanel, BorderLayout.NORTH);
 		add(textArea, BorderLayout.CENTER);
 		add(btn, BorderLayout.SOUTH);
 		
