@@ -11,7 +11,6 @@ public class MainFrame extends JFrame {
 	private JTextArea textArea;
 	private JButton btn;
 	private OptionsPanel optPanel;
-	private Knapsack knapsack;
 	
 	public MainFrame() {
 		super("Knapsack Problem");

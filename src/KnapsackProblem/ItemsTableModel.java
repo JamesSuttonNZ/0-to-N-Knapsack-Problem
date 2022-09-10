@@ -5,8 +5,17 @@ import javax.swing.table.AbstractTableModel;
 public class ItemsTableModel extends AbstractTableModel {
 
 	private String[] columnNames = { "Weight", "Value", "Amount" };
-	private Object[][] data = { {3,7,1}, {4,6,1}, {5,5,1}, {6,4,1}, {7,3,1}};
+	private Object[][] data;
 	private boolean zeroToN = false;
+	
+	public ItemsTableModel(Object[][] d) {
+		this.data = d;
+	}
+	
+	public void setData(Object[][] d) {
+		data = d;
+		fireTableDataChanged();
+	}
 	
 	public boolean isZeroToN() {
 		return zeroToN;

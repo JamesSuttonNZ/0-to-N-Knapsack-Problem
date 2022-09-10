@@ -7,16 +7,14 @@ import javax.swing.JTextArea;
 
 public class Knapsack {
 
-	private int[] weights;
-	private int[] values;
-	private int[] amount;
-	private int[] choices; 
-	private int weightLimit;
+	private int[] weights, values, amount, choices;
+	private int weightLimit, numItems;
 	
 	public Knapsack(int n, int lim) {
 		this.weights = new int[n];
 		this.values = new int[n];
 		this.amount = new int[n];
+		this.numItems = n;
 		this.weightLimit = lim;
 		
 		if(values.length != weights.length || values.length != amount.length){
@@ -27,11 +25,11 @@ public class Knapsack {
 		System.out.println("Values: "+Arrays.toString(values));
 		System.out.println("Weight Limit: "+weightLimit+"\n");
 		
-		final long startTime = System.currentTimeMillis();
-		knapsack();
-		final long endTime = System.currentTimeMillis();
+//		final long startTime = System.currentTimeMillis();
+//		knapsack();
+//		final long endTime = System.currentTimeMillis();
 
-		System.out.println("\nTotal execution time: " + (endTime - startTime) + "ms");
+//		System.out.println("\nTotal execution time: " + (endTime - startTime) + "ms");
 		
 	}
 	
@@ -111,5 +109,41 @@ public class Knapsack {
 	public void calculate(JTextArea textArea) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public int getNumItems() {
+		return numItems;
+	}
+
+	public void setNumItems(int numItems) {
+		this.numItems = numItems;
+	}
+
+	public int[] getWeights() {
+		return weights;
+	}
+
+	public void setWeights(int[] weights) {
+		this.weights = weights;
+	}
+	
+	public void setWeight(int weight, int index) {
+		this.weights[index] = weight;
+	}
+
+	public int[] getValues() {
+		return values;
+	}
+
+	public void setValues(int[] values) {
+		this.values = values;
+	}
+
+	public int[] getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int[] amount) {
+		this.amount = amount;
 	}
 }

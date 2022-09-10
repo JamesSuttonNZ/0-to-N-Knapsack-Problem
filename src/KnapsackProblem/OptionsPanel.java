@@ -10,22 +10,20 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class OptionsPanel extends JPanel {
+	
+	private JPanel itemAmountPanel, algoPanel, numItemsPanel, weightLimitPanel;
 
-	private JRadioButton zeroTo1;
-	private JRadioButton zeroToN;
-	private ButtonGroup group1;
+	private JRadioButton zeroTo1, zeroToN, dynamic, bruteForce, graphSearch, graphSearchRecursive;
+	private ButtonGroup group1, group2;
 	
-	private JRadioButton dynamic;
-	private JRadioButton bruteForce;
-	private JRadioButton graphSearch;
-	private JRadioButton graphSearchRecursive;
-	private ButtonGroup group2;
+	private JTextField weightLimit, numItems;
 	
-	private JTextField weightLimit;
-	private JTextField numItems;
+	private JButton createTableBtn;
 	
 	private JTable items;
 	private ItemsTableModel itemsModel;
+	
+	private Knapsack knapsack;
 	
 	public OptionsPanel() {
 		
@@ -33,16 +31,14 @@ public class OptionsPanel extends JPanel {
 		setBorder(new EmptyBorder(10,10,10,10));
 		
 		//choose between 0-1 and 0-N
-		JPanel op1 = new JPanel(new FlowLayout());
-		
+		itemAmountPanel = new JPanel(new FlowLayout());
 //		JLabel op1Label = new JLabel("Amount of Each Item:");
 //		op1.add(op1Label);
-		
 		zeroTo1 = new JRadioButton("0-1");
 		zeroTo1.setSelected(true);
 		zeroToN = new JRadioButton("0-N");
-		op1.add(zeroTo1);
-		op1.add(zeroToN);
+		itemAmountPanel.add(zeroTo1);
+		itemAmountPanel.add(zeroToN);
 		
 		zeroTo1.addActionListener(new ActionListener() {
 
@@ -67,19 +63,15 @@ public class OptionsPanel extends JPanel {
 			}
 			
 		});
-		
 		group1 = new ButtonGroup();
 		group1.add(zeroTo1);
 		group1.add(zeroToN);
-		
-		add(op1);
+		add(itemAmountPanel);
 		
 		//choose algorithm
-		JPanel op2 = new JPanel(new FlowLayout());
-		
+		algoPanel = new JPanel(new FlowLayout());
 //		JLabel op2Label = new JLabel("Algorithm:");
 //		op2.add(op2Label);
-		
 		dynamic = new JRadioButton("Dynamic Programming");
 		dynamic.setSelected(true);
 		bruteForce = new JRadioButton("Brute Force");
@@ -88,37 +80,21 @@ public class OptionsPanel extends JPanel {
 		graphSearch.setEnabled(false);
 		graphSearchRecursive = new JRadioButton("Graph Search Recursive");
 		graphSearchRecursive.setEnabled(false);
-		op2.add(dynamic);
-		op2.add(bruteForce);
-		op2.add(graphSearch);
-		op2.add(graphSearchRecursive);
-		
+		algoPanel.add(dynamic);
+		algoPanel.add(bruteForce);
+		algoPanel.add(graphSearch);
+		algoPanel.add(graphSearchRecursive);
 		group2 = new ButtonGroup();
 		group2.add(dynamic);
 		group2.add(bruteForce);
 		group2.add(graphSearch);
 		group2.add(graphSearchRecursive);
-		
-		add(op2);
-		
-		//weight limit
-		JPanel op3 = new JPanel(new FlowLayout());
-		
-		JLabel op3Label = new JLabel("Weight Limit:");
-		op3.add(op3Label);
-		
-		weightLimit = new JTextField(10);
-		weightLimit.setText("20");
-		op3.add(weightLimit);
-		
-		add(op3);
+		add(algoPanel);
 		
 		//number of unique items
-		JPanel op4 = new JPanel(new FlowLayout());
-		
-		JLabel op4Label = new JLabel("Number of Items:");
-		op4.add(op4Label);
-		
+		numItemsPanel = new JPanel(new FlowLayout());
+		JLabel op3Label = new JLabel("Number of Items:");
+		numItemsPanel.add(op3Label);
 		numItems = new JTextField(10);
 		numItems.setText("0");
 //		numItems.addActionListener(new ActionListener() {
@@ -144,13 +120,41 @@ public class OptionsPanel extends JPanel {
 //			}
 //			
 //		});
-		op4.add(numItems);
+		numItemsPanel.add(numItems);
+		add(numItemsPanel);
 		
-		add(op4);
+		//create table button
+		createTableBtn = new JButton("Create Table");
+		createTableBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int nItems = Integer.parseInt(numItems.getText());
+				int wLim = Integer.parseInt(weightLimit.getText());
+				knapsack = new Knapsack(nItems, wLim);
+				
+				Object[][] data = { {3,7,1}, {4,6,1}, {5,5,1}, {6,4,1}, {7,3,1}};
+				itemsModel.setData(data);
+				
+			}
+			
+		});
+		add(createTableBtn);
 		
 		//items table
-		itemsModel = new ItemsTableModel();
+		Object[][] data = { {3,7,1}, {4,6,1}, {5,5,1}};
+		itemsModel = new ItemsTableModel(data);
 		items = new JTable(itemsModel);
 		add(new JScrollPane(items));
+		
+		
+		//weight limit
+		weightLimitPanel = new JPanel(new FlowLayout());
+		JLabel op4Label = new JLabel("Weight Limit:");
+		weightLimitPanel.add(op4Label);
+		weightLimit = new JTextField(10);
+		weightLimit.setText("20");
+		weightLimitPanel.add(weightLimit);
+		add(weightLimitPanel);
 	}
 }
